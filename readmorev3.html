@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Read More Script.</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  </head>
+  <body> <!--The most basic version of required styling. -->
+    <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+    }
+    body {
+      margin-right: 100px;
+      margin-left: 100px;
+      margin-top: 150px;
+    }
+    #more {
+      display: none;
+    }
+    .more-button {
+      text-decoration: underline;
+      color: blue;
+    }
+    .less-button {
+      text-decoration: underline;
+      color: blue;
+    }
+    #readmore {
+      display: none;
+    }
+    </style>  <!--Just copy and paste whole article tagged area for further use. -->
+
+    <article> <!--Puting down the text into readmore <p> would automatically runs script. -->
+      <p id="readmore">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Tum ille timide vel potius verecunde: Facio, inquit.
+        Sed quid minus probandum quam esse aliquem beatum nec satis beatum?
+        Dolor ergo, id est summum malum, metuetur semper, etiamsi non aderit;
+        Ut in geometria, prima si dederis, danda sunt omnia. Quod autem in homine
+        praestantissimum atque optimum est, id deseruit. Familiares nostros, credo,
+        Sironem dicis et Philodemum, cum optimos viros, tum homines doctissimos.
+        Duo Reges: constructio interrete. Uterque enim summo bono fruitur, id est voluptate.
+        An haec ab eo non dicuntur? Tecum optime, deinde etiam cum mediocri amico.
+        Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Ea possunt paria non esse.
+        Non est ista, inquam, Piso, magna dissensio. Ille enim occurrentia nescio quae
+        comminiscebatur; Quae tamen a te agetur non melior, quam illae sunt, quas interdum optines.
+        Eadem nunc mea adversum te oratio est. Vitae autem degendae ratio maxime quidem illis placuit
+        quieta. Itaque his sapiens semper vacabit. Si longus, levis. Sint modo partes vitae beatae.
+        Nam et complectitur verbis, quod vult, et dicit plane, quod intellegam; Sed tamen omne,
+        quod de re bona dilucide dicitur, mihi praeclare dici videtur. Quamquam tu hanc copiosiorem.
+      </p>
+
+      <p id="prev"> <!--Do not delete this class and do not insert any texts inside!-->
+
+      </p>
+      <div id='more'> <!--Do not delete this class and do not insert any texts inside! -->
+
+      </div>
+    </article>
+
+    <!--This is the whole script for that little 'read more' and 'show less' buttons to apper and function properly. -->
+    <script>
+    para = document.getElementById("readmore").innerHTML;
+    len = para.split(' ');
+    console.log(len.length);
+      // Get paragraph as a literal and divides it into list items.
+
+    if (len.length>150) {
+      for (i = 0; i <= 150; i++) {
+        char = document.createTextNode(len[i] + ' ' );
+        document.getElementById('prev').appendChild(char);
+      }
+      // for first 150 items joins items together and adds a spacebar to cover
+      // from splitting into list items process.
+
+      readmore = document.createTextNode('Read More!');
+      dots = document.createTextNode('...');
+      //creates read more and ... as a Text.
+
+      link1 = document.createElement('a');
+      link2 = document.createAttribute('class');
+      //Creates link tag and class attribute.
+
+      onclick1 = document.createAttribute('href');
+      onclick2 = document.createAttribute('href');
+      //Creates 2 x href attributes (i like to call them sources.)
+
+      onclick1.value = '#more_item';
+      onclick2.value = '#less_item';
+      //Creates values for link source attributes. (Not functional tho.)
+
+      link2.value = 'more-button';
+      link1.attributes.setNamedItem(link2);
+      link1.attributes.setNamedItem(onclick1);
+      link1.appendChild(readmore);
+      //Assigns more-button class to class of link tagged 'Read More!' Text.
+      //Assigns href attribute and its value to link tag.
+
+    document.getElementById('prev').appendChild(dots);
+    document.getElementById('prev').appendChild(link1);
+      // Adds the dots to the end of sentence and adds 'Read More!' Link to the
+      //End of the sentence.
+
+      for (i = 150; i <= len.length; i++) {
+        char1 = document.createTextNode(len[i] + ' ' );
+        document.getElementById('more').appendChild(char1);
+        }
+        //After 150 characters it automatically puts characters into a hidden
+        // div called more.
+
+      readless = document.createTextNode('Show Less!');
+      lessb = document.createElement('a');
+      lessat = document.createAttribute('class');
+        //Creates show less text link tag and class attribute.
+
+      lessat.value = 'less-button';
+      lessb.attributes.setNamedItem(onclick2);
+      lessb.attributes.setNamedItem(lessat);
+      //Sets class of tag to less button and links it to <a> tag.
+      //Also adds source attribute to this <a> tag.
+
+      lessb.appendChild(readless);
+      //Appends  Show Less text inside the <a> tag.
+
+      document.getElementById('more').appendChild(lessb);
+      //Adds show less text to the end of the sentence in detailed content (Called 'more') <div>.
+
+      }
+
+      else {
+        for (i = 0; i <= len.length; i++) {
+        char = document.createTextNode(len[i] + ' ' );
+        document.getElementById('prev').appendChild(char);
+        }
+        //If the characters are less then 150 then it just prints out the whole
+        // paragraph without any changes.
+
+      }
+
+    $(document).ready(function(){
+      $(".less-button").hide();
+      $(".more-button").click(function(){
+      $("#more").slideDown();
+      $(".more-button").hide();
+      $(".less-button").show();
+      });
+
+      $(".less-button").click(function(){
+      $("#more").slideUp();
+      $(".less-button").hide();
+      $(".more-button").fadeIn();
+      });
+
+    //Little animation for Read More text's onclick. Jquery.
+    //On click to Read More text.
+    //Hidden paragraph slides down and becomes visible.
+    //Afterwards it hides the Read More text.
+    //Show less button appers.
+    //Onclick to show less button dissapears and show more fades in.
+    //Also extra content shown slides back in.
+    });
+    </script>
+  </body>
+</html>
